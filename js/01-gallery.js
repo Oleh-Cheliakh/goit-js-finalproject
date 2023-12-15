@@ -46,19 +46,18 @@ function handleGalleryClick(event) {
 
 	modalElement.show();
 
-	//Provide opportunity to close modal on pressing Escape
-	handleModalKeydown(event);
+	// Add listener only when modal is open
+	if (basicLightbox.visible()) {
+		//Provide opportunity to close modal on pressing Escape
+		document.addEventListener("keydown", handleModalKeydown);
+	}
 }
 
 //Add keyboard listener when modal is open
 function handleModalKeydown(event) {
-	// Add listener only when modal is open
-	if (basicLightbox.visible()) {
-		document.addEventListener("keydown", (event) => {
-			if (event.code === "Escape") {
-				modalElement.close();
-			}
-		});
+	if (event.code === "Escape") {
+		modalElement.close();
+		document.removeEventListener("keydown", handleModalKeydown);
 	}
 }
 
